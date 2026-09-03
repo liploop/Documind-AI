@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 from pypdf import PdfReader
 import database as db
 
@@ -18,19 +18,17 @@ st.set_page_config(
 # Load Environment Variables
 load_dotenv(override=True)
 api_key = None
-
 if "GEMINI_API_KEY" in st.secrets:
     api_key = str(st.secrets["GEMINI_API_KEY"]).strip()
 elif os.getenv("GEMINI_API_KEY"):
     api_key = str(os.getenv("GEMINI_API_KEY")).strip()
 
-# Validasi API Key
 if not api_key:
-    st.error("⚠️ `GEMINI_API_KEY` tidak ditemukan! Pastikan sudah diatur di Secrets Streamlit Cloud.")
+    st.error("⚠️ `GEMINI_API_KEY` tidak ditemukan! Periksa Secrets di Streamlit Cloud.")
     st.stop()
 
-# Konfigurasikan SDK Gemini
-genai.configure(api_key=api_key)
+# Inisialisasi Client SDK Baru
+client = genai.Client(api_key=api_key)
 
 # Session State Initialization
 if "user_id" not in st.session_state:
@@ -145,8 +143,10 @@ if uploaded_file is not None:
             if st.button("✨ Buat Rangkuman Otomatis", type="primary"):
                 with st.spinner("Menggenerasi rangkuman..."):
                     prompt_summary = f"Rangkum dokumen berikut secara ringkas:\n\n{pdf_text}"
-                    model = genai.GenerativeModel("gemini-3.6-flash")
-                    response = model.generate_content(prompt_summary)
+                    response = client.models.generate_content(
+                    model="gemini-1.5-flash",
+                    contents=prompt_summary
+                    )
                     st.session_state.summary = response.text
                     
                     if st.session_state.current_doc_id:
@@ -174,8 +174,10 @@ if uploaded_file is not None:
                     db.save_chat_message(st.session_state.current_doc_id, "user", user_query)
 
                 prompt_qa = f"Isi Dokumen:\n{pdf_text}\n\nPertanyaan: {user_query}"
-                model = genai.GenerativeModel("gemini-3.6-flash")
-                response = model.generate_content(prompt_qa)
+                response = client.models.generate_content(
+                model="gemini-1.5-flash",
+                contents=prompt_qa
+                )
                 
                 st.session_state.chat_history.append(("assistant", response.text))
                 if st.session_state.current_doc_id:
