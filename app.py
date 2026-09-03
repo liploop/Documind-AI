@@ -17,9 +17,16 @@ st.set_page_config(
 
 # Load Environment Variables
 load_dotenv(override=True)
-api_key = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
+api_key = None
+if "GEMINI_API_KEY" in st.secrets:
+    api_key = st.secrets["GEMINI_API_KEY"]
+else:
+    api_key = os.getenv("GEMINI_API_KEY")
+
 if api_key:
     genai.configure(api_key=api_key)
+else:
+    st.error("⚠️ GEMINI_API_KEY tidak ditemukan! Periksa konfigurasi Secrets di Streamlit Cloud.")
 
 # Session State Initialization
 if "user_id" not in st.session_state:
