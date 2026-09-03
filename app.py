@@ -144,7 +144,7 @@ if uploaded_file is not None:
                 with st.spinner("Menggenerasi rangkuman..."):
                     prompt_summary = f"Rangkum dokumen berikut secara ringkas:\n\n{pdf_text}"
                     response = client.models.generate_content(
-                    model="gemini-1.5-flash",
+                    model="gemini-3.6-flash",
                     contents=prompt_summary
                     )
                     st.session_state.summary = response.text
@@ -175,7 +175,7 @@ if uploaded_file is not None:
 
                 prompt_qa = f"Isi Dokumen:\n{pdf_text}\n\nPertanyaan: {user_query}"
                 response = client.models.generate_content(
-                model="gemini-1.5-flash",
+                model="gemini-3.6-flash",
                 contents=prompt_qa
                 )
                 
