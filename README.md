@@ -1,6 +1,8 @@
-# 🧠 DocuMind AI — Smart Document Assistant & Q&A
+# 🧠 DocuMind AI — Smart PDF Document Assistant
 
-DocuMind AI adalah aplikasi web berbasis Artificial Intelligence (LLM) yang membantu pengguna menganalisis, merangkum, dan mengajukan pertanyaan dari dokumen PDF secara instan. Dilengkapi dengan sistem autentikasi pengguna dan penyimapan riwayat analisis di database SQLite.
+DocuMind AI adalah aplikasi asisten dokumen berbasis web yang memungkinkan pengguna untuk mengunggah dokumen PDF, menggenerasi rangkuman otomatis secara presisi, dan melakukan tanya jawab (Q&A) interaktif berdasarkan isi dokumen menggunakan **Google Gemini AI**.
+
+🚀 **Live Demo:** [documind-ai-app.streamlit.app](https://documind-ai-app.streamlit.app)
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
@@ -10,25 +12,39 @@ DocuMind AI adalah aplikasi web berbasis Artificial Intelligence (LLM) yang memb
 ---
 
 ## ✨ Fitur Utama
-- **📄 PDF Text Extraction:** Ekstraksi otomatis teks dari berkas PDF menggunakan `pypdf`.
-- **📝 Automated Summarization:** Merangkum poin-poin utama dokumen menggunakan model **Gemini 3.6 Flash**.
-- **💬 Document Q&A (Context Injection):** Menjawab pertanyaan seputar isi dokumen secara interaktif.
-- **🔐 User Authentication:** Registrasi dan Login aman berbasis enkripsi `bcrypt`.
-- **💾 Session & Database History:** Menyimpan riwayat dokumen dan pesan obrolan per user di SQLite.
+
+- **🔐 Sistem Autentikasi Pengguna:**
+  - Registrasi & Login dengan enkripsi password aman berbasis `bcrypt`.
+  - Dukungan **Mode Guest** untuk uji coba cepat tanpa harus login.
+
+- **📄 Ekstraksi & Analisis PDF:**
+  - Pembacaan dan ekstraksi teks otomatis dari file PDF menggunakan `pypdf`.
+
+- **🤖 Integrasi Google Gemini AI:**
+  - Rangkuman otomatis isi dokumen secara cepat dan terstruktur.
+  - Tanya Jawab (Q&A) kontekstual berbasis konten dokumen yang diunggah.
+
+- **💾 Manajemen Data & Riwayat:**
+  - Penyimpanan data pengguna, dokumen, dan riwayat chat interaktif menggunakan **SQLite**.
 
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend / UI:** Streamlit
-- **AI Model:** Google Gemini API (`gemini-3.6-flash`)
-- **Backend / DB:** Python, SQLite3, Bcrypt
-- **Document Processing:** PyPDF, Python-dotenv
+
+- **Frontend & Web Framework:** [Streamlit](https://streamlit.io/)
+- **AI Model & SDK:** Google Gemini API ([`google-genai`](https://pypi.org/project/google-genai/)) — `gemini-3.6-flash`
+- **Database:** SQLite
+- **Security:** `bcrypt`
+- **PDF Processing:** `pypdf`
+- **Deployment Platform:** Streamlit Community Cloud
 
 ---
 
-## 🚀 Cara Menjalankan secara Lokal
+## 💻 Cara Menjalankan Secara Lokal
 
-1. **Clone repository ini:**
-   ```bash
-   git clone [https://github.com/liploop/Documind-AI.git](https://github.com/liploop/Documind-AI.git)
-   cd Documind-AI
+Jika Anda ingin menjalankan proyek ini di lingkungan lokal (*local development*):
+
+### 1. Clone Repository
+```bash
+git clone [https://github.com/liploop/documind-ai.git](https://github.com/liploop/documind-ai.git)
+cd documind-ai
