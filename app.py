@@ -1,6 +1,5 @@
 import os
 import streamlit as st
-from dotenv import load_dotenv
 import google.generativeai as genai
 from pypdf import PdfReader
 import database as db
